@@ -1,7 +1,7 @@
 <h1>Todo list app</h1>
 
-<p>Evolution du visuel global:
--Accueil:</p>
+<h2>Evolution du visuel global:</h2>
+<p>-Accueil:</p>
 <img width="981" alt="image" src="https://github.com/user-attachments/assets/77838db9-1e8d-4842-be83-2a1abbe5f73d" />
 
 
