@@ -1,3 +1,6 @@
+import UI.ButtonAdd
+import UI.TaskDialogCreation
+import UI.Tasks
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -16,11 +19,12 @@ fun App() {
             Tasks(tasks = tasks)
 
         }
-
-        if (showDialog) CreationTaskDialog(onDismiss = {showDialog=false}, onConfirm = {
+        if (showDialog) TaskDialogCreation(onDismiss = {showDialog=false}, onConfirm = {
             tasks.add(it)
             showDialog=false
         })
+
+
 
     }
 }

@@ -1,3 +1,5 @@
+package UI
+
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -13,8 +15,8 @@ private fun Task(modifier: Modifier = Modifier, title:String){
     }
 }
 
-@Preview
 @Composable
+@Preview
 fun Tasks(modifier: Modifier = Modifier, tasks:List<String>){
     LazyColumn {
         items(items = tasks){
