@@ -2,21 +2,24 @@ package UI
 
 import Task
 import androidx.compose.desktop.ui.tooling.preview.Preview
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Checkbox
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
@@ -24,20 +27,25 @@ import androidx.compose.ui.unit.dp
 private fun Task(
     modifier: Modifier = Modifier,
     task: Task,
-
+    onCheckedChange:(Boolean)->Unit,
 
     ){
     var checkState by rememberSaveable{ mutableStateOf(false) }
 
     Card(
         modifier=Modifier.padding(8.dp).size(width = 400.dp, height = 100.dp),
-        elevation = 2.dp
+        elevation = 2.dp,
+        border = BorderStroke(0.5.dp,Color.Gray),
+        shape = RoundedCornerShape(12.dp)
         ) {
-        Row(modifier=modifier.padding(4.dp),
+        Row(modifier=modifier.padding(8.dp),
             verticalAlignment = Alignment.CenterVertically) {
             Checkbox(
                 checked = checkState,
-                onCheckedChange = { checkState=it  },
+                onCheckedChange = {
+                    onCheckedChange(it)
+                    checkState=it
+                                  },
                 )
             Text(task.title, fontWeight = FontWeight.SemiBold)
         }
@@ -47,11 +55,17 @@ private fun Task(
 
 @Composable
 @Preview
-fun Tasks(modifier: Modifier = Modifier, tasks:List<Task>){
+fun Tasks(
+    modifier: Modifier = Modifier,
+    tasks:List<Task>,
+    onCheckedChange:(Task,Boolean)->Unit
+    ){
+
 
     LazyColumn {
         items(items = tasks){
-            Task(task = it)
+            Task(task = it,onCheckedChange={state->onCheckedChange(it,state) })
+
 
         }
     }

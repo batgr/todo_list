@@ -26,7 +26,7 @@ fun CustomTextField(
     modifier: Modifier=Modifier,
     value:String,
     onValueChange:(String)->Unit){
-    TextField(value=value, onValueChange = {onValueChange(it)})
+    OutlinedTextField(value=value, onValueChange = {onValueChange(it)})
 }
 
 @Composable
