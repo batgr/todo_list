@@ -1,5 +1,6 @@
 package UI
 
+import Task
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -20,7 +21,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
-private fun Task(modifier: Modifier = Modifier, title:String){
+private fun Task(
+    modifier: Modifier = Modifier,
+    task: Task,
+
+
+    ){
     var checkState by rememberSaveable{ mutableStateOf(false) }
 
     Card(
@@ -31,10 +37,9 @@ private fun Task(modifier: Modifier = Modifier, title:String){
             verticalAlignment = Alignment.CenterVertically) {
             Checkbox(
                 checked = checkState,
-                onCheckedChange = {checkState=it},
-
+                onCheckedChange = { checkState=it  },
                 )
-            Text(title, fontWeight = FontWeight.SemiBold)
+            Text(task.title, fontWeight = FontWeight.SemiBold)
         }
 
     }
@@ -42,10 +47,13 @@ private fun Task(modifier: Modifier = Modifier, title:String){
 
 @Composable
 @Preview
-fun Tasks(modifier: Modifier = Modifier, tasks:List<String>){
+fun Tasks(modifier: Modifier = Modifier, tasks:List<Task>){
+
     LazyColumn {
         items(items = tasks){
-            Task(title=it)
+            Task(task = it)
+
         }
     }
 }
+

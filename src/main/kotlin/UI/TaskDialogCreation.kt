@@ -18,9 +18,10 @@ import androidx.compose.ui.window.Dialog
 @Composable
 @Preview
 fun TaskDialogCreation(modifier: Modifier = Modifier, onDismiss:()->Unit, onConfirm:(String)->Unit){
-    var value by rememberSaveable { mutableStateOf("") }
-    var enabled by rememberSaveable{ mutableStateOf(false) }
-    enabled = value.isNotBlank()
+
+    var title by rememberSaveable { mutableStateOf("") } //the title of the task
+    var enabled by rememberSaveable{ mutableStateOf(false) } //enabled or not the button create
+    enabled = title.isNotBlank()
 
     Dialog(
         onDismissRequest = onDismiss,
@@ -37,14 +38,14 @@ fun TaskDialogCreation(modifier: Modifier = Modifier, onDismiss:()->Unit, onConf
                     modifier = Modifier.padding(8.dp)
                 ){
                     Text("title: ")
-                    CustomTextField(value=value, onValueChange = {value=it})
+                    CustomTextField(value=title, onValueChange = {title=it}) //the text field of the title
                 }
                 Row(
                     modifier = modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End
                 ) {
                     CustomTextButton(text = "cancel", onClick =onDismiss )
-                    CustomTextButton(text = "create", onClick ={ onConfirm(value) }, enabled = enabled )
+                    CustomTextButton(text = "create", onClick ={ onConfirm(title) }, enabled = enabled )
 
                 }
 

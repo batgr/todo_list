@@ -10,7 +10,7 @@ import androidx.compose.runtime.*
 @Preview
 fun App() {
     var showDialog by remember { mutableStateOf(false) }
-    val tasks = mutableListOf<String>()
+    val tasks = mutableListOf<Task>()
 
     MaterialTheme {
         Scaffold(
@@ -20,7 +20,7 @@ fun App() {
 
         }
         if (showDialog) TaskDialogCreation(onDismiss = {showDialog=false}, onConfirm = {
-            tasks.add(it)
+            tasks.add(Task(it))
             showDialog=false
         })
 
