@@ -1,12 +1,10 @@
-import UI.ButtonAdd
-import UI.TaskDialogCreation
-import UI.TaskViewModel
-import UI.Tasks
+import UI.*
 import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.lifecycle.viewmodel.compose.viewModel
+
+
 
 @Composable
 @Preview
@@ -17,19 +15,20 @@ fun App(taskViewModel: TaskViewModel= viewModel()) {
     val tasks = tasksManager.tasks
 
     MaterialTheme {
-        Scaffold(
-            floatingActionButton = { ButtonAdd(onClick = { showDialog = true }) },
-        ){
-            Tasks(tasks = tasks, onCheckedChange = {task,state-> taskViewModel.markAsCompleted(state,task) })
 
-        }
+        ListDetailView(
+            onClick = {showDialog=true},
+            markAsCompleted = {state,task-> taskViewModel.markAsCompleted(state,task) },
+            tasks = tasks,
+        )
+
         if (showDialog) TaskDialogCreation(onDismiss = {showDialog=false}, onConfirm = {
             taskViewModel.addTask(Task(it))
             showDialog=false
 
         })
 
-
-
     }
+
+
 }

@@ -23,6 +23,8 @@ dependencies {
     implementation(compose.desktop.currentOs)
     implementation("org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.8.0")
 
+
+
 }
 
 compose.desktop {

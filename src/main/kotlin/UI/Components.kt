@@ -74,8 +74,6 @@ fun RoundedCornerCheckBox(
                     onValueChange = onCheckedChange
                 )
                 .padding(2.dp),
-
-
             ){
             if(checkedState){
                 Icon(imageVector = Icons.Filled.Check, contentDescription = "checked")
@@ -83,3 +81,4 @@ fun RoundedCornerCheckBox(
         }
     }
 }
+
