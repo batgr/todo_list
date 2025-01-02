@@ -3,7 +3,8 @@ import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.lifecycle.viewmodel.compose.viewModel
-
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -11,17 +12,17 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 fun App(taskViewModel: TaskViewModel= viewModel()) {
 
     var showDialog by remember { mutableStateOf(false) }
-    val tasksManager by taskViewModel.uiState.collectAsState()
-    val tasks = tasksManager.tasks
+    val tasks by taskViewModel.tasks.collectAsState()
+
+
+
 
     MaterialTheme {
-
         ListDetailView(
             onClick = {showDialog=true},
-            markAsCompleted = {state,task-> taskViewModel.markAsCompleted(state,task) },
+            onCheckedChange = { task ->taskViewModel.onCheckedChange(task)},
             tasks = tasks,
         )
-
         if (showDialog) TaskDialogCreation(onDismiss = {showDialog=false}, onConfirm = {
             taskViewModel.addTask(Task(it))
             showDialog=false

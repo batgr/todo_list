@@ -1,27 +1,34 @@
 package UI
 
 import Task
-import TasksManager
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 
 
 class TaskViewModel: ViewModel(){
 
-    private var _uiState = MutableStateFlow(TasksManager())
-    private var tasks = _uiState.value.tasks
-    val uiState:StateFlow<TasksManager> = _uiState.asStateFlow()
+    private val _tasks = MutableStateFlow<List<Task>>(mutableListOf())
+
+
+    val tasks:StateFlow<List<Task>> = _tasks.asStateFlow()
 
     fun addTask(task: Task){
-        tasks.add(task)
-    }
-
-    fun markAsCompleted(state:Boolean,task: Task){
-        _uiState.value.markAsCompleted(state,task)
+        _tasks.update { (it + task) }
 
     }
+
+    fun onCheckedChange(task: Task) {
+
+        _tasks.update { it.map { if(it.id==task.id) it.copy(completed = !task.completed) else it}}
+    }
+
+    private fun updateTasksState(){
+        _tasks.update { it }
+    }
+
 
 
 }

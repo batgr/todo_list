@@ -1,9 +1,9 @@
-import java.util.Objects
 
-class Task(var title:String="") {
-     var completed:Boolean=false
-     var id:Int=ID.count()
-          get() = field
+
+data class Task(
+     val title:String="",
+     val completed:Boolean=false,
+     val id:Int=ID.count()) {
 
      private object ID{
           var id=0
@@ -11,18 +11,6 @@ class Task(var title:String="") {
      }
 
 
-     override fun hashCode(): Int {
-          return id
-     }
-
-     override fun equals(other: Any?): Boolean {
-          if (this === other) return true
-          if (other !is Task) return false
-
-          if (title != other.title) return false
-
-          return true
-     }
 
 
 }

@@ -5,11 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -18,6 +14,7 @@ import Task
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.window.Dialog
 
@@ -65,7 +62,7 @@ fun ListDetailView(
     modifier: Modifier=Modifier,
     onClick:(Boolean)->Unit,
     tasks: List<Task>,
-    markAsCompleted:(Boolean,Task)->Unit
+    onCheckedChange:(Task)->Unit
     ){
     Row {
         SideBar()
@@ -75,7 +72,7 @@ fun ListDetailView(
                 CustomTopBar()
             },
         ){
-            Tasks(tasks = tasks, onCheckedChange = {task,state-> markAsCompleted(state,task) })
+            Tasks(tasks = tasks, onCheckedChange = {onCheckedChange(it) })
 
         }
     }
@@ -85,9 +82,10 @@ fun ListDetailView(
 private fun Task(
     modifier: Modifier = Modifier,
     task: Task,
-    onCheckedChange:(Boolean)->Unit,
+    onCheckedChange:()->Unit,
+
 ){
-    var checkState by rememberSaveable{ mutableStateOf(false) }
+
     Card(
         modifier=Modifier.padding(8.dp).size(width = 400.dp, height = 100.dp),
         elevation = 2.dp,
@@ -98,9 +96,9 @@ private fun Task(
         ) {
             RoundedCornerCheckBox(
                 onCheckedChange = {
-                    onCheckedChange(it)
-                    checkState=it },
-                checkedState = checkState
+                    onCheckedChange()
+                     },
+                checkedState = task.completed
             )
             Text(task.title, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(4.dp))
         }
@@ -112,12 +110,20 @@ private fun Task(
 fun Tasks(
     modifier: Modifier = Modifier,
     tasks:List<Task>,
-    onCheckedChange:(Task,Boolean)->Unit
+    onCheckedChange:(Task)->Unit
 ){
+
 
     LazyColumn(modifier=modifier.padding(48.dp)) {
         items(items = tasks){
-            Task(task = it,onCheckedChange={state->onCheckedChange(it,state) })
+
+            Task(
+                task = it,
+                onCheckedChange={
+                        onCheckedChange(it)
+                },
+
+            )
         }
     }
 }
