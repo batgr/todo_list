@@ -4,6 +4,9 @@
 <p>-Accueil:</p>
 <img width="981" alt="image" src="https://github.com/user-attachments/assets/77838db9-1e8d-4842-be83-2a1abbe5f73d" />
 <br/>
+<img width="1127" alt="image" src="https://github.com/user-attachments/assets/2b25f942-c988-428a-ba3a-698f76af4fa4" />
+
+<br/>
 <br/>
 <h2>Avancement majeur des components:</h2>
 <br/>
@@ -18,6 +21,7 @@
 <br/>
 <p>qui devient:</p>
 <img width="557" alt="image" src="https://github.com/user-attachments/assets/117a9cd5-ae03-4ac2-a71e-32680c5c9a29" />
+
 
 
 
