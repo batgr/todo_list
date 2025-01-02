@@ -1,5 +1,6 @@
 package UI
 
+import AppDestinations
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,6 +12,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import Task
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.border
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
@@ -22,15 +25,17 @@ import androidx.compose.ui.window.Dialog
 @Composable
 fun CustomTopBar(
     modifier: Modifier=Modifier,
-    title:String="Tasks"
+    title:String="Tasks",
+    showNavigationIcon:Boolean,
+    onClick: () -> Unit
 ){
     TopAppBar(
         title = { Text(title) },
         backgroundColor = Color.White,
         elevation = 0.dp,
         navigationIcon = {
-            if(false){
-                IconButton(onClick = {}) {
+            if(showNavigationIcon){
+                IconButton(onClick = onClick) {
                     Icon(Icons.Default.Menu, contentDescription = "Toggle Drawer")
                 }
             }
@@ -39,20 +44,42 @@ fun CustomTopBar(
 }
 
 @Composable
-fun SideBar(modifier: Modifier = Modifier) {
+fun SideBar(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    currentDestination:AppDestinations,
+    onChangeDestination:(AppDestinations)->Unit,
+    tasks: List<Task>
+    ) {
     NavigationRail(
-        modifier = modifier.width(250.dp),
+        modifier = modifier.width(300.dp),
         elevation = 1.dp,
-        backgroundColor = Color(233, 236, 239)
-    ){
-        IconButton(onClick = {}, modifier = modifier.align(Alignment.End)){
-            Icon(imageVector = Icons.Filled.Menu,"Toggle Drawer")
-        }
+        backgroundColor = Color(233, 236, 239),
+        header = {
+            IconButton(onClick = onClick, modifier = modifier.align(Alignment.End)){
+                Icon(imageVector = Icons.Filled.Menu,"Toggle Drawer")
+            }
+        },
 
-        Column(modifier=modifier.padding(24.dp)){
-            Text("not completed")
-            Text("completed")
-        }
+    ){
+
+       AppDestinations.entries.forEach {
+           var count:Int?=null
+
+           if (it==AppDestinations.ALL){
+               count=tasks.filter { !it.completed }.size
+           }
+           if (it==AppDestinations.COMPLETED){
+               count=tasks.filter { it.completed }.size
+           }
+
+           AppDestinationCard(
+               appDestinations = it,
+               currentDestination = currentDestination,
+               onChangeDestination = {onChangeDestination(it)},
+               count=count
+           )
+       }
 
     }
 }
@@ -64,15 +91,32 @@ fun ListDetailView(
     tasks: List<Task>,
     onCheckedChange:(Task)->Unit
     ){
+    var showSideBar by rememberSaveable{mutableStateOf(true)}
+    val toggleShowSideBar = {showSideBar=!showSideBar}
+    var currentDestination by rememberSaveable{ mutableStateOf(AppDestinations.ALL) }
+
     Row {
-        SideBar()
+
+        if(showSideBar) SideBar(
+            onClick={toggleShowSideBar()},
+            currentDestination = currentDestination,
+            onChangeDestination = {currentDestination=it},
+            tasks=tasks
+            )
+
         Scaffold(
             floatingActionButton = { ButtonAdd(onClick = { onClick(true) }) },
             topBar = {
-                CustomTopBar()
+                CustomTopBar(
+                    showNavigationIcon = !showSideBar,
+                    onClick = { toggleShowSideBar() }
+                    )
             },
         ){
-            Tasks(tasks = tasks, onCheckedChange = {onCheckedChange(it) })
+            when(currentDestination){
+                AppDestinations.ALL ->Tasks(tasks = tasks.filter { !it.completed }, onCheckedChange = {onCheckedChange(it) })
+                AppDestinations.COMPLETED ->Tasks(tasks = tasks.filter { it.completed }, onCheckedChange = {onCheckedChange(it) })
+            }
 
         }
     }
@@ -87,17 +131,18 @@ private fun Task(
 ){
 
     Card(
-        modifier=Modifier.padding(8.dp).size(width = 400.dp, height = 100.dp),
+        modifier = Modifier.padding(8.dp).size(width = 400.dp, height = 100.dp),
         elevation = 2.dp,
-        border = BorderStroke(0.5.dp,Color.Gray),
+        border = BorderStroke(0.5.dp, Color.Gray),
         shape = RoundedCornerShape(12.dp)
     ) {
-        Row(modifier=modifier.padding(8.dp),
+        Row(
+            modifier = modifier.padding(8.dp),
         ) {
             RoundedCornerCheckBox(
                 onCheckedChange = {
                     onCheckedChange()
-                     },
+                },
                 checkedState = task.completed
             )
             Text(task.title, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(4.dp))
@@ -112,17 +157,11 @@ fun Tasks(
     tasks:List<Task>,
     onCheckedChange:(Task)->Unit
 ){
-
-
     LazyColumn(modifier=modifier.padding(48.dp)) {
         items(items = tasks){
-
             Task(
                 task = it,
-                onCheckedChange={
-                        onCheckedChange(it)
-                },
-
+                onCheckedChange={ onCheckedChange(it) },
             )
         }
     }
