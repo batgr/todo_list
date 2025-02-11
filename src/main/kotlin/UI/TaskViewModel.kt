@@ -1,11 +1,13 @@
 package UI
 
-import Task
+import UI.Model.SimpleDateTime
+import UI.Model.Task
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import java.time.LocalDateTime
 
 
 class TaskViewModel: ViewModel(){
@@ -19,12 +21,17 @@ class TaskViewModel: ViewModel(){
     }
 
     fun onCheckedChange(task: Task) {
-        _tasks.update { it.map { if(it.id==task.id) it.copy(completed = !task.completed) else it}}
+        val completedAt = if(!task.completed) SimpleDateTime(LocalDateTime.now()) else null
+        _tasks.update {
+            it.map {
+                if(it.id==task.id)
+                    it.copy(completed = !task.completed, completedAt = completedAt)
+                else it
+            }
+        }
     }
 
-    fun test(){
-        for (i in 1..100000) addTask(Task(title = "$i"))
-    }
+
 
 
 

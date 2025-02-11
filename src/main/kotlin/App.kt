@@ -1,4 +1,7 @@
 import UI.*
+import UI.Components.ListDetailView
+import UI.Components.TaskDialogCreation
+import UI.Model.Task
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.material.*
 import androidx.compose.runtime.*

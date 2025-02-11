@@ -1,4 +1,4 @@
-package UI
+package UI.Components
 
 import AppDestinations
 import androidx.compose.foundation.BorderStroke
@@ -11,9 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import Task
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.border
+import UI.Model.Task
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
@@ -73,7 +71,7 @@ fun SideBar(
                count=tasks.filter { it.completed }.size
            }
 
-           AppDestinationCard(
+           DestinationCard(
                appDestinations = it,
                currentDestination = currentDestination,
                onChangeDestination = {onChangeDestination(it)},
@@ -114,8 +112,8 @@ fun ListDetailView(
             },
         ){
             when(currentDestination){
-                AppDestinations.ALL ->Tasks(tasks = tasks.filter { !it.completed }, onCheckedChange = {onCheckedChange(it) })
-                AppDestinations.COMPLETED ->Tasks(tasks = tasks.filter { it.completed }, onCheckedChange = {onCheckedChange(it) })
+                AppDestinations.ALL -> Tasks(tasks = tasks.filter { !it.completed }, onCheckedChange = {onCheckedChange(it) })
+                AppDestinations.COMPLETED -> Tasks(tasks = tasks.filter { it.completed }, onCheckedChange = {onCheckedChange(it) })
             }
 
         }
@@ -128,7 +126,7 @@ private fun Task(
     task: Task,
     onCheckedChange:()->Unit,
 
-){
+    ){
 
     Card(
         modifier = Modifier.padding(8.dp).size(width = 400.dp, height = 100.dp),
@@ -136,16 +134,21 @@ private fun Task(
         border = BorderStroke(0.5.dp, Color.Gray),
         shape = RoundedCornerShape(12.dp)
     ) {
-        Row(
-            modifier = modifier.padding(8.dp),
-        ) {
-            RoundedCornerCheckBox(
-                onCheckedChange = {
-                    onCheckedChange()
-                },
-                checkedState = task.completed
-            )
-            Text(task.title, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(4.dp))
+        Column(modifier = modifier.padding(8.dp)) {
+            Row(
+
+            ) {
+                RoundedCornerCheckBox(
+                    onCheckedChange = {
+                        onCheckedChange()
+                    },
+                    checkedState = task.completed
+                )
+                Text(task.title, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(4.dp))
+            }
+            if(task.completed){
+                Text("Completed : ${task.completedAt?.getDateAsText()}")
+            }
         }
 
     }
