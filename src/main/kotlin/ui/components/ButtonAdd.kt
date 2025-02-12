@@ -1,4 +1,4 @@
-package UI.Components
+package ui.components
 
 import androidx.compose.material.ExtendedFloatingActionButton
 import androidx.compose.material.Icon

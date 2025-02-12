@@ -1,4 +1,4 @@
-package UI.Components
+package ui.components
 
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.runtime.Composable

@@ -4,6 +4,7 @@ plugins {
     kotlin("jvm")
     id("org.jetbrains.compose")
     id("org.jetbrains.kotlin.plugin.compose")
+    kotlin("plugin.serialization") version "2.1.0"
 }
 
 group = "com.example"
@@ -22,6 +23,16 @@ dependencies {
     // With compose.desktop.common you will also lose @Preview functionality
     implementation(compose.desktop.currentOs)
     implementation("org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.8.0")
+    implementation("io.ktor:ktor-client-core:3.0.3")
+    implementation("io.ktor:ktor-client-cio:3.0.3")
+    implementation("io.ktor:ktor-client-cio-jvm:3.0.3")
+    implementation("io.ktor:ktor-client-content-negotiation:3.0.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+    testImplementation(kotlin("test"))
+    testImplementation("org.testng:testng:7.1.0")
+
+    implementation("io.ktor:ktor-serialization-kotlinx-json:3.0.3")
 
 
 

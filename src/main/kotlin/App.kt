@@ -1,7 +1,7 @@
-import UI.*
-import UI.Components.ListDetailView
-import UI.Components.TaskDialogCreation
-import UI.Model.Task
+import ui.*
+import ui.components.ListDetailView
+import ui.components.TaskCreationDialog
+import model.Task
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -23,7 +23,7 @@ fun App(taskViewModel: TaskViewModel= viewModel()) {
             onCheckedChange = { task ->taskViewModel.onCheckedChange(task)},
             tasks = tasks,
         )
-        if (showDialog) TaskDialogCreation(onDismiss = {showDialog=false}, onConfirm = {
+        if (showDialog) TaskCreationDialog(onDismiss = {showDialog=false}, onConfirm = {
             taskViewModel.addTask(Task(it))
             showDialog=false
 

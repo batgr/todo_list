@@ -1,11 +1,16 @@
-package UI.Model
+package model
 
+
+import kotlinx.serialization.Contextual
+import kotlinx.serialization.Serializable
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
-class SimpleDateTime(private val dateTime: LocalDateTime) {
+@Serializable
+class SimpleDateTime(
+    @Contextual private val dateTime: LocalDateTime) {
 
     fun getDateAsText():String{
         val date = dateTime.toLocalDate()
@@ -35,4 +40,30 @@ class SimpleDateTime(private val dateTime: LocalDateTime) {
         return date.format(formater)
     }
 
+    fun getDateTime():LocalDateTime{
+        return dateTime
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is SimpleDateTime) return false
+
+        if (dateTime != other.dateTime) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return dateTime.hashCode()
+    }
+
+    override fun toString(): String {
+        return "SimpleDateTime(dateTime=$dateTime)"
+    }
+
+
 }
+
+
+
+

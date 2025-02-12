@@ -1,6 +1,6 @@
-package UI.Components
+package ui.components
 
-import AppDestinations
+import utils.AppDestinations
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 fun DestinationCard(
     modifier: Modifier = Modifier,
     appDestinations: AppDestinations,
-    currentDestination:AppDestinations,
+    currentDestination: AppDestinations,
     onChangeDestination:()->Unit,
     count:Int?=null
 

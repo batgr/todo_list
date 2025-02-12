@@ -13,7 +13,7 @@
 <p>-boutons ajouter nouvelle tache:</p>
 <img width="150" alt="image" src="https://github.com/user-attachments/assets/c79dcf91-0398-446a-b4ab-d7277d136a20" />
 <br/>
-<p>-creation UI.Model.Task Dialog :</p>
+<p>-creation ui.Model.Task Dialog :</p>
 <img width="981" alt="image" src="https://github.com/user-attachments/assets/2c9d6155-6136-4078-9e78-c29ac5c9d582" />
 <br/>
 <p>-presentation d'une tache sous forme de card:</p>
