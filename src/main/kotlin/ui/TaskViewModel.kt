@@ -7,10 +7,7 @@ import model.Task
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 
@@ -18,6 +15,7 @@ import java.time.LocalDateTime
 class TaskViewModel: ViewModel(){
 
     private val _tasks = MutableStateFlow<List<Task>>(mutableListOf())
+
     private val taskImpl = TaskImpl(DefaultHttpClientProvider)
     val tasks:StateFlow<List<Task>> = _tasks.asStateFlow()
 

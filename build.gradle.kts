@@ -30,8 +30,6 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
     testImplementation(kotlin("test"))
-    testImplementation("org.testng:testng:7.1.0")
-
     implementation("io.ktor:ktor-serialization-kotlinx-json:3.0.3")
 
 

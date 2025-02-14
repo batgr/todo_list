@@ -16,7 +16,6 @@ class TaskImpl(provider: HttpClientProvider):TaskService {
 
     override suspend fun getAllTask(): List<Task> {
         val response = client.get(BASE_URL)
-        println(response.bodyAsText())
         return response.body()
 
     }

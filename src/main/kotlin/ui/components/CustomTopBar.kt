@@ -11,10 +11,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
+private const val DEFAULT_TOP_BAR_TITLE = "Tasks"
+
+private const val DRAWER_TOGGLE_DESCRIPTION = "Toggle Drawer"
+
 @Composable
+
 fun CustomTopBar(
     modifier: Modifier = Modifier,
-    title:String="Tasks",
+    title:String=DEFAULT_TOP_BAR_TITLE,
     showNavigationIcon:Boolean,
     onClick: () -> Unit
 ){
@@ -25,7 +30,7 @@ fun CustomTopBar(
         navigationIcon = {
             if(showNavigationIcon){
                 IconButton(onClick = onClick) {
-                    Icon(Icons.Default.Menu, contentDescription = "Toggle Drawer")
+                    Icon(Icons.Default.Menu, contentDescription = DRAWER_TOGGLE_DESCRIPTION)
                 }
             }
         }

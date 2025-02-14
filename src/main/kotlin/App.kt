@@ -15,16 +15,15 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 fun App(taskViewModel: TaskViewModel= viewModel()) {
 
     var showDialog by rememberSaveable { mutableStateOf(false) }
-    val tasks by taskViewModel.tasks.collectAsState()
+
 
     MaterialTheme {
         ListDetailView(
-            onClick = {showDialog=true},
-            onCheckedChange = { task ->taskViewModel.onCheckedChange(task)},
-            tasks = tasks,
+            onClick = {showDialog=true}
+
         )
         if (showDialog) TaskCreationDialog(onDismiss = {showDialog=false}, onConfirm = {
-            taskViewModel.addTask(Task(it))
+            taskViewModel.addTask(Task(title = it))
             showDialog=false
 
         })

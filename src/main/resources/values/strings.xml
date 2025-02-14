@@ -1,4 +1,4 @@
 <resources>
     <string name="cancel">cancel</string>
-
+    <string name="add_task">Add task</string>
 </resources>

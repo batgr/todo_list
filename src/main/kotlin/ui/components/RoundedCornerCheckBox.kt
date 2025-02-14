@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 fun RoundedCornerCheckBox(
     modifier: Modifier = Modifier,
     onCheckedChange:(Boolean)->Unit,
-    checkedState:Boolean
+    isChecked:Boolean
 ){
     Surface(modifier=modifier.padding(6.dp)) {
         Box(
@@ -30,14 +30,20 @@ fun RoundedCornerCheckBox(
                 .border(width = 2.dp, color = Color.Black, shape = RoundedCornerShape(12.dp))
                 .clip(CircleShape)
                 .toggleable(
-                    value = checkedState,
+                    value = isChecked,
                     onValueChange = onCheckedChange
                 )
                 .padding(2.dp),
         ){
-            if(checkedState){
-                Icon(imageVector = Icons.Filled.Check, contentDescription = "checked")
-            }
+            ShowCheckedIcon(isChecked)
         }
+    }
+}
+
+@Composable
+private fun ShowCheckedIcon(checkedState: Boolean) {
+    if (checkedState) {
+        val contentDescription = "checked"
+        Icon(imageVector = Icons.Filled.Check, contentDescription = contentDescription)
     }
 }

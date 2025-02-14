@@ -20,7 +20,9 @@ fun SideBar(
     onClick: () -> Unit,
     currentDestination: AppDestinations,
     onChangeDestination:(AppDestinations)->Unit,
-    tasks: List<Task>
+    completedSize:Int,
+    incompletedSize:Int
+
 ) {
     NavigationRail(
         modifier = modifier.width(300.dp),
@@ -33,22 +35,18 @@ fun SideBar(
         },
 
         ){
+        var numberOfElement:Int?=null
 
         AppDestinations.entries.forEach {
-            var count:Int?=null
-
-            if (it== AppDestinations.ALL){
-                count=tasks.filter { !it.completed }.size
-            }
-            if (it== AppDestinations.COMPLETED){
-                count=tasks.filter { it.completed }.size
-            }
+            if(it==AppDestinations.ALL) numberOfElement=incompletedSize
+            else if (it==AppDestinations.COMPLETED) numberOfElement=completedSize
 
             DestinationCard(
                 appDestinations = it,
                 currentDestination = currentDestination,
                 onChangeDestination = {onChangeDestination(it)},
-                count=count
+                numberOfElement = numberOfElement
+
             )
         }
 

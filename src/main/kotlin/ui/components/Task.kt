@@ -37,7 +37,7 @@ fun Task(
                     onCheckedChange = {
                         onCheckedChange()
                     },
-                    checkedState = task.completed
+                    isChecked = task.completed
                 )
                 Text(task.title, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(4.dp))
             }

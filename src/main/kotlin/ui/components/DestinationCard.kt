@@ -16,7 +16,8 @@ fun DestinationCard(
     appDestinations: AppDestinations,
     currentDestination: AppDestinations,
     onChangeDestination:()->Unit,
-    count:Int?=null
+    numberOfElement:Int?
+
 
 ){
     val cardColor = if(appDestinations==currentDestination) Color(206, 212, 218) else Color.Transparent
@@ -28,7 +29,7 @@ fun DestinationCard(
     ) {
         NavigationRailItem(
             icon = {
-                IconText(modifier, appDestinations,count)
+                IconText(modifier, appDestinations, numberOfElement = numberOfElement)
             },
             onClick = onChangeDestination,
             selected = appDestinations==currentDestination,

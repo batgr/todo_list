@@ -11,15 +11,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun IconText(modifier: Modifier, appDestinations: AppDestinations, count: Int?) {
+fun IconText(modifier: Modifier, appDestinations: AppDestinations,numberOfElement:Int?) {
     Row(
         modifier = modifier.fillMaxWidth()
             .padding(4.dp)
     ) {
         Row(modifier=modifier.weight(1f)) {
-            Icon(appDestinations.icon, contentDescription = "")
+            Icon(appDestinations.icon, contentDescription = appDestinations.description)
             Text(appDestinations.title, modifier = modifier.padding(start = 4.dp))
         }
-        Text("$count")
+        Text("$numberOfElement")
     }
 }
